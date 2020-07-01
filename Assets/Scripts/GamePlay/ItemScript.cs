@@ -13,33 +13,38 @@ public class ItemScript : MonoBehaviour
     private bool ignoreCollision;
   
 
-    //drag option
+    //drag option using touch 
     float deltaX, deltaY;
-
-    bool moveAllowed = false;
+    //bool moveAllowed = false;
     float speedModifier = 1f;
 
-    // Start is called before the first frame update
+    //for height check
+    public static float heightval = -4.5f;
+    public static float rulerHeight = 0.1f;
+
+    //drag and drop using mouse
+    private Vector3 moffset;
+    private float mxCoord;
+
+  
     void Awake()
     {
         mybody = GetComponent<Rigidbody2D>();
-       
         mybody.gravityScale = 0f;
     }
     void Start()
     {
         canMove = true;
-
-        GamePlayController.instance.currentItem = this;
+        GamePlayController.instance.currentItem = this;       
     }
 
-    // Update is called once per frame
     void Update()
     {
         MoveBox();
     }
     void MoveBox()
     {
+        #region Andriod
         if (canMove)
         {
             if (Input.touchCount > 0)
@@ -55,25 +60,50 @@ public class ItemScript : MonoBehaviour
                             deltaX = touchpos.x - transform.position.x;
                             deltaY = touchpos.y - transform.position.y;
 
-                        moveAllowed = true;
+                        //moveAllowed = true;
                         //}
                         break;
                     case TouchPhase.Moved:
-                       //if (GetComponent<Collider2D>() == Physics2D.OverlapPoint(touchpos) && moveAllowed)
-                       if(touchpos.x > min_x && touchpos.x < max_x)
-                        mybody.MovePosition(new Vector3((touchpos.x - deltaX) * speedModifier, transform.position.y/*touchpos.y * speedModifier*/));
+                        //if (GetComponent<Collider2D>() == Physics2D.OverlapPoint(touchpos) && moveAllowed)
+                        mybody.MovePosition(new Vector3(Mathf.Clamp((touchpos.x - deltaX), min_x, max_x) * speedModifier, transform.position.y/*(touchpos.y - deltaY) * speedModifier*/)); 
                         Debug.LogWarning(deltaY);
                         break;
 
                     case TouchPhase.Ended:
-                        moveAllowed = false;
+                        //moveAllowed = false;
                         DropItem();
                         break;
                 }
               
             }
         }
+        #endregion Andriod
     }
+
+    //mouse control for testing purpose
+
+    private void OnMouseDown()
+    {
+        mxCoord = Camera.main.WorldToScreenPoint(gameObject.transform.position).y;
+        moffset = gameObject.transform.position - GetMouseWorldPos();
+    }
+    private Vector3 GetMouseWorldPos()
+    {
+        Vector3 mousepoints = Input.mousePosition;
+        mousepoints.y = mxCoord;
+
+        return Camera.main.ScreenToWorldPoint(mousepoints);
+    }
+    private void OnMouseDrag()
+    {
+        transform.position = GetMouseWorldPos() + moffset;
+    }
+    private void OnMouseUp()
+    {
+        DropItem();
+    }
+    //end of the mouse input for testing purpose
+
     public void DropItem()
     {
         canMove = false;
@@ -81,6 +111,29 @@ public class ItemScript : MonoBehaviour
     }
     void Landed()
     {
+        //test code for height of stack
+        #region heightcheck
+        rulerHeight = GamePlayController.instance.rulerHeightFn();
+        Debug.Log("rulerheiht before = " + rulerHeight);
+       
+        if (transform.position.y >= heightval)
+        {
+            float temp = Mathf.Abs((transform.position.y/10) - (heightval/10));
+            heightval = transform.position.y;
+          
+            if (rulerHeight > heightval )
+            {
+                rulerHeight =rulerHeight+ temp;
+                PlayerPrefs.SetFloat("Ruler", rulerHeight);
+                GamePlayController.instance.setRulerHeight();
+            }
+
+            Debug.Log("height value "+ heightval+"rulerheiht = " + rulerHeight+temp);
+
+        }
+        //end of  code for height of stack
+        #endregion heightcheck
+
         if (gameover)
             return;
         ignoreCollision = true;
