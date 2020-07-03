@@ -19,8 +19,8 @@ public class ItemScript : MonoBehaviour
     float speedModifier = 1f;
 
     //for height check
-    public static float heightval = -4.5f;
-    public static float rulerHeight = 0.1f;
+    public static float heightval;
+    public static float rulerHeight;
 
     //drag and drop using mouse
     private Vector3 moffset;
@@ -29,6 +29,9 @@ public class ItemScript : MonoBehaviour
   
     void Awake()
     {
+        heightval = PlayerPrefs.GetFloat("HeightVal");
+        rulerHeight = PlayerPrefs.GetFloat("RulerHeight");
+
         mybody = GetComponent<Rigidbody2D>();
         mybody.gravityScale = 0f;
     }
@@ -42,7 +45,7 @@ public class ItemScript : MonoBehaviour
     {
         MoveBox();
     }
-    void MoveBox()
+    void MoveBox() 
     {
         #region Andriod
         if (canMove)
@@ -65,7 +68,7 @@ public class ItemScript : MonoBehaviour
                         break;
                     case TouchPhase.Moved:
                         //if (GetComponent<Collider2D>() == Physics2D.OverlapPoint(touchpos) && moveAllowed)
-                        mybody.MovePosition(new Vector3(Mathf.Clamp((touchpos.x - deltaX), min_x, max_x) * speedModifier, transform.position.y/*(touchpos.y - deltaY) * speedModifier*/)); 
+                        mybody.MovePosition(new Vector3(Mathf.Clamp((touchpos.x - deltaX), min_x, max_x) * speedModifier,/* transform.position.y*/(touchpos.y - deltaY) * speedModifier)); 
                         Debug.LogWarning(deltaY);
                         break;
 
@@ -81,16 +84,18 @@ public class ItemScript : MonoBehaviour
     }
 
     //mouse control for testing purpose
-
     private void OnMouseDown()
     {
-        mxCoord = Camera.main.WorldToScreenPoint(gameObject.transform.position).y;
-        moffset = gameObject.transform.position - GetMouseWorldPos();
+        if (canMove)
+        {
+            mxCoord = Camera.main.WorldToScreenPoint(gameObject.transform.position).z;
+            moffset = gameObject.transform.position - GetMouseWorldPos();
+        }
     }
     private Vector3 GetMouseWorldPos()
     {
         Vector3 mousepoints = Input.mousePosition;
-        mousepoints.y = mxCoord;
+        mousepoints.z= mxCoord;
 
         return Camera.main.ScreenToWorldPoint(mousepoints);
     }
@@ -108,40 +113,36 @@ public class ItemScript : MonoBehaviour
     {
         canMove = false;
         mybody.gravityScale =Random.Range(2,4);
+
     }
     void Landed()
     {
-        //test code for height of stack
-        #region heightcheck
-        rulerHeight = GamePlayController.instance.rulerHeightFn();
-        Debug.Log("rulerheiht before = " + rulerHeight);
        
+        #region heightcheck      
         if (transform.position.y >= heightval)
         {
-            float temp = Mathf.Abs((transform.position.y/10) - (heightval/10));
-            heightval = transform.position.y;
-          
-            if (rulerHeight > heightval )
-            {
-                rulerHeight =rulerHeight+ temp;
-                PlayerPrefs.SetFloat("Ruler", rulerHeight);
-                GamePlayController.instance.setRulerHeight();
+            rulerHeight = GamePlayController.instance.rulerHeightFn();        
+            float tempDiffVal = Mathf.Abs(Mathf.Abs(transform.position.y/10) - Mathf.Abs(heightval/10));
+            
+            if (transform.position.y > heightval)
+            {            
+                heightval = transform.position.y;
+                rulerHeight =rulerHeight+ (2.5f* tempDiffVal);               
+                PlayerPrefs.SetFloat("HeightVal", heightval);
+                PlayerPrefs.SetFloat("RulerHeight", rulerHeight);
+
+                GamePlayController.instance.setRulerHeight(rulerHeight);
             }
-
-            Debug.Log("height value "+ heightval+"rulerheiht = " + rulerHeight+temp);
-
         }
-        //end of  code for height of stack
         #endregion heightcheck
-
         if (gameover)
             return;
         ignoreCollision = true;
-       
-        GamePlayController.instance.spawnNewItem();
-        GamePlayController.instance.MoveCamera();
+                
+            GamePlayController.instance.spawnNewItem();
+            GamePlayController.instance.MoveCamera();           
     }
- 
+
     private void OnCollisionEnter2D(Collision2D target)
     {
         if (ignoreCollision)

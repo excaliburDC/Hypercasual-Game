@@ -6,10 +6,7 @@ public class ItemSpawner : MonoBehaviour
 {
 
     public GameObject[] itemPrefab;
-    //void Start()
-    //{
-    //    SpawnItem();
-    //}
+  
 
     public void SpawnItem()
     {

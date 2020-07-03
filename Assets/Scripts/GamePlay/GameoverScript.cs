@@ -9,9 +9,9 @@ public class GameoverScript : MonoBehaviour
     {
         if (target.tag == "GameOver")
         {
+          
             CancelInvoke("Landed");
             GamePlayController.instance.RestartGame();
         }
-    }
-
+    }   
 }

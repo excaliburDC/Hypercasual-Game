@@ -7,6 +7,8 @@ TagManager:
   - GameOver
   - GroceryItem
   - Platform
+  - GameComplete
+  - Ruler
   layers:
   - Default
   - TransparentFX
