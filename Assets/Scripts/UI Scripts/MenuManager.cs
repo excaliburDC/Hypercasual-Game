@@ -4,10 +4,13 @@ using UnityEngine;
 
 public class MenuManager : MonoBehaviour
 {
+    public static MenuManager instance;
+
     public Menus m_startMenu;
 
     //for testing purpose
     [SerializeField] public Menus m_pauseMenu;
+    [SerializeField] public Menus m_Hud;
 
     [SerializeField]
     private Component[] menus = new Component[0];
@@ -24,6 +27,17 @@ public class MenuManager : MonoBehaviour
 
     private void Awake()
     {
+        #region Singleton
+        if (instance == null)
+            instance = this;
+
+        else if (instance != null && instance != this)
+            Destroy(this.gameObject);
+
+        DontDestroyOnLoad(this.gameObject);
+
+        #endregion
+
         //the bool parameter decides whether to include inactive gameobjects or not
         menus = GetComponentsInChildren<Menus>(true);
     }
@@ -39,9 +53,9 @@ public class MenuManager : MonoBehaviour
     private void Update()
     {
         //for testing purpose only
-        if(Input.GetKeyDown(KeyCode.Escape))
+        if(currentMenu==m_Hud && Input.GetKeyDown(KeyCode.Escape))
         {
-            SwitchMenus(m_pauseMenu);
+            PauseMenu();
         }
     }
 
@@ -73,6 +87,27 @@ public class MenuManager : MonoBehaviour
             SwitchMenus(previousMenu);
         }
     }
+
+    public void SwitchToHUD()
+    {
+        if(m_Hud)
+        {
+            SwitchMenus(m_Hud);
+            Time.timeScale = 1f;
+        }
+    }
+
+    public void PauseMenu()
+    {
+        if(m_pauseMenu)
+        {
+            Time.timeScale = 0f;
+            SwitchMenus(m_pauseMenu);
+        }
+       
+    }
+
+    
 
     public void QuitGame()
     {

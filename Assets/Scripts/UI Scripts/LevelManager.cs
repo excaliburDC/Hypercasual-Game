@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using UnityEngine.SceneManagement;
 
 public class LevelManager : MonoBehaviour
 {
@@ -37,8 +38,8 @@ public class LevelManager : MonoBehaviour
             button.levelUnlockint = level.unLock;
             button.GetComponent<Button>().interactable = level.isInteractible;
             button.levelLockedImg.enabled = (level.unLock != 1) ? true : false;
-            // button.GetComponent<Button>().onClick.AddListener(() => LoadLevel("Level" + button.LevelText.text));
-            //button.GetComponent<Button>().onClick.AddListener(() => StarCor("Level" + button.LevelText.text));
+            button.GetComponent<Button>().onClick.AddListener(() => LoadLevel("Level" + button.levelText.text));
+            button.GetComponent<Button>().onClick.AddListener(() => MenuManager.instance.SwitchToHUD());
 
 
 
@@ -46,6 +47,8 @@ public class LevelManager : MonoBehaviour
         }
        // SaveLevelData();
     }
+
+    
 
     private void SaveLevelData()
     {
@@ -60,6 +63,12 @@ public class LevelManager : MonoBehaviour
     public void Delete()
     {
         PlayerPrefs.DeleteAll();
+    }
+
+    //for testing
+    public void LoadLevel(string levelName)
+    {
+        SceneManager.LoadScene(levelName);
     }
 }
 
