@@ -6,11 +6,9 @@ using UnityEngine;
 
 public class MenuManager : SingletonManager<MenuManager>
 {
-    //public static MenuManager instance;
 
     public Menus m_startMenu;
 
-    //for testing purpose
     [SerializeField] public Menus m_pauseMenu;
     [SerializeField] public Menus m_Hud;
 
@@ -26,16 +24,6 @@ public class MenuManager : SingletonManager<MenuManager>
 
     private void OnEnable()
     {
-        //#region Singleton
-        //if (instance == null)
-        //    instance = this;
-
-        //else if (instance != null && instance != this)
-        //    Destroy(this.gameObject);
-
-        //DontDestroyOnLoad(this.gameObject);
-
-        //#endregion
 
         //the bool parameter decides whether to include inactive gameobjects or not
         menus = GetComponentsInChildren<Menus>(true);
@@ -54,6 +42,7 @@ public class MenuManager : SingletonManager<MenuManager>
         //for testing purpose only
         if(currentMenu==m_Hud && Input.GetKeyDown(KeyCode.Escape))
         {
+           
             PauseMenu();
         }
     }
@@ -76,7 +65,7 @@ public class MenuManager : SingletonManager<MenuManager>
         }
     }
 
-   
+    
 
     public void SwitchToPreviousMenu()
     {
@@ -101,10 +90,15 @@ public class MenuManager : SingletonManager<MenuManager>
         if(m_pauseMenu)
         {
             Time.timeScale = 0f;
-
+            AudioManager.Instance.Pause("MenuSound");
             SwitchMenus(m_pauseMenu);
         }
        
+    }
+
+    public void PlayButtonSound()
+    {
+        AudioManager.Instance.Play("ButtonSound");
     }
 
     
