@@ -27,6 +27,8 @@ public class SingletonManager<T> : MonoBehaviour where T: MonoBehaviour
     {
         if (instance != null)
             Destroy(this.gameObject); //prevent duplicates
+
+        DontDestroyOnLoad(this.gameObject);
     }
 
 }

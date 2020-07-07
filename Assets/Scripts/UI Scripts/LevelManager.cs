@@ -39,7 +39,8 @@ public class LevelManager : MonoBehaviour
             button.GetComponent<Button>().interactable = level.isInteractible;
             button.levelLockedImg.enabled = (level.unLock != 1) ? true : false;
             button.GetComponent<Button>().onClick.AddListener(() => LoadLevel("Level" + button.levelText.text));
-            button.GetComponent<Button>().onClick.AddListener(() => MenuManager.instance.SwitchToHUD());
+            button.GetComponent<Button>().onClick.AddListener(() => AudioManager.Instance.Play("ButtonSound"));
+            button.GetComponent<Button>().onClick.AddListener(() => MenuManager.Instance.SwitchToHUD());
 
 
 

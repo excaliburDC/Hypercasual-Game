@@ -5,22 +5,25 @@ using UnityEngine.Audio;
 
 public class AudioManager : SingletonManager<AudioManager>
 {
+    private static readonly string bgmString = "BGM";
+    private static readonly string sfxString = "SFX";
     public List<Sounds> sounds;
+
+    [HideInInspector] public float bgmFloat, sfxFloat;
+
 
     [SerializeField] private float delay = 1f;
 
-    private void Awake()
-    {
-        DontDestroyOnLoad(this.gameObject);
 
-        foreach (Sounds s in sounds)
-        {
-            s.audioSource = gameObject.AddComponent<AudioSource>();
-            s.audioSource.clip = s.clip;
-            s.audioSource.volume = s.volume;
-            s.audioSource.pitch = s.pitch;
-            s.audioSource.loop = s.loop;
-        }
+
+
+    private void OnEnable()
+    {
+        bgmFloat = PlayerPrefs.GetFloat(bgmString);
+        sfxFloat = PlayerPrefs.GetFloat(sfxString);
+        Debug.Log(bgmFloat + " " + sfxFloat);
+        
+        SetupAudio();
     }
 
     // Start is called before the first frame update
@@ -29,10 +32,28 @@ public class AudioManager : SingletonManager<AudioManager>
         Play("MenuSound");
     }
 
+    private void SetupAudio()
+    {
+
+        foreach (Sounds s in sounds)
+        {
+            s.audioSource = gameObject.AddComponent<AudioSource>();
+            s.audioSource.clip = s.clip;
+
+            if (s.audioType.ToString() == bgmString)
+                s.audioSource.volume = bgmFloat;
+
+            else if (s.audioType.ToString() == sfxString)
+                s.audioSource.volume = sfxFloat;
+
+            s.audioSource.loop = s.loop;
+        }
+    }
+
     public void Play(string name)
     {
         Sounds s = sounds.Find(sound => sound.name == name);
-        if(s==null)
+        if (s == null)
         {
             Debug.LogWarning("Sound: " + name + " not found..!!!");
             return;
@@ -45,10 +66,10 @@ public class AudioManager : SingletonManager<AudioManager>
     {
         Sounds s = sounds.Find(sound => sound.name == name);
 
-        if(s.audioSource.isPlaying)
+        if (s.audioSource.isPlaying)
         {
             StartCoroutine(FadeSound(s));
-        
+
         }
     }
 
@@ -85,11 +106,47 @@ public class AudioManager : SingletonManager<AudioManager>
         }
     }
 
+    public void SetBGMVolume(float volume)
+    {
+        //mixerGroup.audioMixer.SetFloat("Music", volume);
+
+        foreach (Sounds s in sounds)
+        {
+            if (s.audioType.ToString() == bgmString)
+            {
+                s.audioSource.volume = volume;
+                bgmFloat = volume;
+                PlayerPrefs.SetFloat(bgmString, bgmFloat);
+                Debug.Log(PlayerPrefs.GetFloat(bgmString));
+
+
+            }
+
+        }
+
+    }
+
+    public void SetSFXVolume(float volume)
+    {
+        //mixerGroup.audioMixer.SetFloat("Music", volume);
+        foreach (Sounds s in sounds)
+        {
+            if (s.audioType.ToString() == sfxString)
+            {
+                s.audioSource.volume = volume;
+                sfxFloat = volume;
+                PlayerPrefs.SetFloat(sfxString, sfxFloat);
+                Debug.Log(PlayerPrefs.GetFloat(sfxString));
+            }
+        }
+
+    }
+
     IEnumerator FadeSound(Sounds currentSound)
     {
         float elapsedTime = 0;
         float currentVolume = currentSound.audioSource.volume;
-        while(elapsedTime<delay)
+        while (elapsedTime < delay)
         {
             elapsedTime += Time.deltaTime;
             currentSound.audioSource.volume = Mathf.Lerp(currentVolume, 0f, elapsedTime / delay);
