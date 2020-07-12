@@ -11,9 +11,9 @@ GameObject:
   - component: {fileID: 8574982244162860620}
   - component: {fileID: 8199580010552859402}
   - component: {fileID: 3343991580184551307}
-  - component: {fileID: 2580359813006903623}
   - component: {fileID: -4587477791189075755}
   - component: {fileID: -3097997812520949824}
+  - component: {fileID: 7483306983270633550}
   m_Layer: 0
   m_Name: Pinapple
   m_TagString: GroceryItem
@@ -105,32 +105,6 @@ Rigidbody2D:
   m_SleepingMode: 1
   m_CollisionDetection: 0
   m_Constraints: 0
---- !u!61 &2580359813006903623
-BoxCollider2D:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 6310529501545315637}
-  m_Enabled: 1
-  m_Density: 1
-  m_Material: {fileID: 0}
-  m_IsTrigger: 0
-  m_UsedByEffector: 0
-  m_UsedByComposite: 0
-  m_Offset: {x: 0, y: -0.011435747}
-  m_SpriteTilingProperty:
-    border: {x: 0, y: 0, z: 0, w: 0}
-    pivot: {x: 0.5, y: 0.5}
-    oldSize: {x: 0.31566668, y: 0.64133334}
-    newSize: {x: 0.31566668, y: 0.64133334}
-    adaptiveTilingThreshold: 0.5
-    drawMode: 0
-    adaptiveTiling: 0
-  m_AutoTiling: 0
-  serializedVersion: 2
-  m_Size: {x: 0.31566668, y: 0.61846185}
-  m_EdgeRadius: 0
 --- !u!114 &-4587477791189075755
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -155,3 +129,29 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f31f4cb909851b2438580f93c5175222, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!61 &7483306983270633550
+BoxCollider2D:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6310529501545315637}
+  m_Enabled: 1
+  m_Density: 1
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_UsedByEffector: 0
+  m_UsedByComposite: 0
+  m_Offset: {x: -0.0019083917, y: -0.0076236725}
+  m_SpriteTilingProperty:
+    border: {x: 0, y: 0, z: 0, w: 0}
+    pivot: {x: 0.5, y: 0.5}
+    oldSize: {x: 0.4735, y: 0.962}
+    newSize: {x: 0.31566668, y: 0.64133334}
+    adaptiveTilingThreshold: 0.5
+    drawMode: 0
+    adaptiveTiling: 0
+  m_AutoTiling: 0
+  serializedVersion: 2
+  m_Size: {x: 0.47215432, y: 0.961534}
+  m_EdgeRadius: 0
