@@ -2,15 +2,21 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using TMPro;
 
 
 public class MenuManager : SingletonManager<MenuManager>
 {
+    //public event Action<int> OnUpdateLivesText;
 
     public Menus m_startMenu;
+    public TextMeshProUGUI livesText;
 
-    [SerializeField] public Menus m_pauseMenu;
-    [SerializeField] public Menus m_Hud;
+    public static bool isGameOver;
+
+    [SerializeField] private Menus m_pauseMenu;
+    [SerializeField] private Menus m_Hud;
+    [SerializeField] private Menus m_GameOverMenu;
 
     [SerializeField]
     private Component[] menus = new Component[0];
@@ -35,7 +41,11 @@ public class MenuManager : SingletonManager<MenuManager>
         {
             SwitchMenus(m_startMenu);
         }
+       
+            
+
     }
+
 
     private void Update()
     {
@@ -44,6 +54,22 @@ public class MenuManager : SingletonManager<MenuManager>
         {
            
             PauseMenu();
+        }
+
+        if (currentMenu == m_Hud)
+        {
+            Test.Instance.OnLiveLost += UpdateLivesText;
+        }
+    }
+
+    public void UpdateLivesText(int livesLeft)
+    {
+        livesText.text = "Lives : " + livesLeft.ToString();
+
+        if(livesLeft<0)
+        {
+            
+            GameOver();
         }
     }
 
@@ -94,6 +120,13 @@ public class MenuManager : SingletonManager<MenuManager>
             SwitchMenus(m_pauseMenu);
         }
        
+    }
+
+    public void GameOver()
+    {
+        isGameOver = true;
+        SwitchMenus(m_GameOverMenu);
+        Time.timeScale = 0f;
     }
 
     public void PlayButtonSound()

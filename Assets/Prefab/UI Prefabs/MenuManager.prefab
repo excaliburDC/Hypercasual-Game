@@ -3866,8 +3866,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_startMenu: {fileID: 3183668813398788456}
+  livesText: {fileID: 205121020279553442}
   m_pauseMenu: {fileID: 276608027740341005}
   m_Hud: {fileID: 7477487901758678371}
+  m_GameOverMenu: {fileID: 4895235247927835733}
   menus: []
 --- !u!114 &331230400
 MonoBehaviour:
