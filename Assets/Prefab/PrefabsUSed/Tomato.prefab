@@ -11,10 +11,11 @@ GameObject:
   - component: {fileID: 4790587617362371760}
   - component: {fileID: 6342159162625116033}
   - component: {fileID: 2469527292820991145}
-  - component: {fileID: 5245909954006043344}
   - component: {fileID: 2000063302604926351}
   - component: {fileID: -3633381116817140267}
+  - component: {fileID: 5245909954006043344}
   - component: {fileID: 403147321810978034}
+  - component: {fileID: 2030056371240156234}
   m_Layer: 0
   m_Name: Tomato
   m_TagString: GroceryItem
@@ -97,7 +98,7 @@ Rigidbody2D:
   m_Simulated: 1
   m_UseFullKinematicContacts: 0
   m_UseAutoMass: 0
-  m_Mass: 1.5
+  m_Mass: 1
   m_LinearDrag: 2
   m_AngularDrag: 3
   m_GravityScale: 1
@@ -106,6 +107,30 @@ Rigidbody2D:
   m_SleepingMode: 1
   m_CollisionDetection: 0
   m_Constraints: 0
+--- !u!114 &2000063302604926351
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3778590626768173294}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f31f4cb909851b2438580f93c5175222, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &-3633381116817140267
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3778590626768173294}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 21169123961012e49afed9bc1ce419dd, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!61 &5245909954006043344
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -132,30 +157,6 @@ BoxCollider2D:
   serializedVersion: 2
   m_Size: {x: 0.75654244, y: 0.7769184}
   m_EdgeRadius: 0
---- !u!114 &2000063302604926351
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3778590626768173294}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: f31f4cb909851b2438580f93c5175222, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
---- !u!114 &-3633381116817140267
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3778590626768173294}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 21169123961012e49afed9bc1ce419dd, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!60 &403147321810978034
 PolygonCollider2D:
   m_ObjectHideFlags: 0
@@ -163,7 +164,7 @@ PolygonCollider2D:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 3778590626768173294}
-  m_Enabled: 1
+  m_Enabled: 0
   m_Density: 1
   m_Material: {fileID: 0}
   m_IsTrigger: 0
@@ -463,3 +464,19 @@ PolygonCollider2D:
       - {x: -0.050750002, y: -0.41575003}
       - {x: -0.043750003, y: -0.41525003}
       - {x: -0.032250002, y: -0.41425002}
+--- !u!58 &2030056371240156234
+CircleCollider2D:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3778590626768173294}
+  m_Enabled: 1
+  m_Density: 1
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_UsedByEffector: 0
+  m_UsedByComposite: 0
+  m_Offset: {x: -0.078659534, y: -0.0480085}
+  serializedVersion: 2
+  m_Radius: 0.3762262

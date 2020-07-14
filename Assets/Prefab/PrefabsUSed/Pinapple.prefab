@@ -15,6 +15,7 @@ GameObject:
   - component: {fileID: -3097997812520949824}
   - component: {fileID: 7483306983270633550}
   - component: {fileID: 4740834068139329177}
+  - component: {fileID: 1502798960057650155}
   m_Layer: 0
   m_Name: Pinapple
   m_TagString: GroceryItem
@@ -97,7 +98,7 @@ Rigidbody2D:
   m_Simulated: 1
   m_UseFullKinematicContacts: 0
   m_UseAutoMass: 0
-  m_Mass: 2
+  m_Mass: 1
   m_LinearDrag: 2
   m_AngularDrag: 3
   m_GravityScale: 1
@@ -163,7 +164,7 @@ PolygonCollider2D:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 6310529501545315637}
-  m_Enabled: 1
+  m_Enabled: 0
   m_Density: 1
   m_Material: {fileID: 0}
   m_IsTrigger: 0
@@ -527,3 +528,19 @@ PolygonCollider2D:
       - {x: 0.021750001, y: -0.48100004}
       - {x: 0.03125, y: -0.48000002}
       - {x: 0.03875, y: -0.47900003}
+--- !u!70 &1502798960057650155
+CapsuleCollider2D:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6310529501545315637}
+  m_Enabled: 1
+  m_Density: 1
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_UsedByEffector: 0
+  m_UsedByComposite: 0
+  m_Offset: {x: 0, y: -0.031867623}
+  m_Size: {x: 0.4735, y: 0.89826477}
+  m_Direction: 0
